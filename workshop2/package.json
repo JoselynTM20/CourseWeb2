@@ -1,0 +1,19 @@
+{
+  "name": "workshop2",
+  "version": "1.0.0",
+  "description": "WEB api for testing REST in ISW-711",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "isw-711"
+  ],
+  "author": "Joselyn",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
