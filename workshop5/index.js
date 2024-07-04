@@ -13,10 +13,7 @@ app.use(cors({
 }));
 
 //para la conexion a bd
-const db = mongoose.connect("mongodb+srv://JoselynTijerino:JoselynTijerino@cluster0.6sdzi3m.mongodb.net/", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+const db = mongoose.connect("mongodb+srv://JoselynTijerino:JoselynTijerino15@cluster0.bzbj5gg.mongodb.net/");
 
 const { careerGet, careerPost, careerPut, careerDelete } = require('./server/controllers/careerController');
 app.get("/api/career/", careerGet);
@@ -28,6 +25,6 @@ app.delete("/api/career", careerDelete);
 
 
 // Iniciar el servidor
-const port = 3000;
+const port = 3001;
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 

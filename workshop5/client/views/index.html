@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Careers</h1>
+        <div id="careers" class="mb-4"></div>
+
+        <h2 class="mb-4">Filter Careers</h2>
+        <div class="mb-3">
+            <input type="text" id="careerNameFilter" placeholder="Filter by name" class="form-control mb-2">
+            <select id="careerSortOrder" class="form-control mb-2">
+                <option value="">Sort order</option>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+            <button onclick="fetchCareers()" class="btn btn-primary">Fetch Careers</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function fetchCareers() {
+            const name = document.getElementById('careerNameFilter').value;
+            const sortOrder = document.getElementById('careerSortOrder').value;
+            let url = 'http://localhost:3001/api/career';
+            if (name || sortOrder) {
+                url += '?';
+                if (name) {
+                    url += `name=${name}`;
+                }
+                if (sortOrder) {
+                    if (name) url += '&';
+                    url += `sort=${sortOrder}`;
+                }
+            }
+
+            axios.get(url)
+                .then(function (response) {
+                    const careers = response.data;
+                    const lista = document.getElementById('careers');
+                    lista.innerHTML = '';
+                    careers.forEach(career => {
+                        const item = document.createElement('div');
+                        item.className = 'alert alert-secondary';
+                        item.textContent = `Name: ${career.name} - Code: ${career.code} - Description: ${career.description}`;
+                        lista.appendChild(item);
+                    });
+                })
+                .catch(function (error) {
+                    console.log('Error fetching careers:', error);
+                });
+        }
+
+        window.onload = function() {
+            fetchCareers();
+        };
+    </script>
+</body>
+</html>
