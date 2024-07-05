@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Careers</title>
+    <title>Index</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Careers</h1>
+        <h1>Protected API Endpoint</h1>
         <div id="careers" class="mb-4"></div>
 
         <h2 class="mb-4">Filter Careers</h2>
@@ -24,14 +24,11 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function fetchCareers() {
             const name = document.getElementById('careerNameFilter').value;
             const sortOrder = document.getElementById('careerSortOrder').value;
-            let url = 'http://localhost:3001/api/career';
+            let url = 'http://localhost:3000/api/career';
             if (name || sortOrder) {
                 url += '?';
                 if (name) {
@@ -42,8 +39,14 @@
                     url += `sort=${sortOrder}`;
                 }
             }
-
-            axios.get(url)
+    
+            const token = localStorage.getItem('token'); // Obtener el token de localStorage
+    
+            axios.get(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
                 .then(function (response) {
                     const careers = response.data;
                     const lista = document.getElementById('careers');
@@ -59,7 +62,7 @@
                     console.log('Error fetching careers:', error);
                 });
         }
-
+    
         window.onload = function() {
             fetchCareers();
         };
